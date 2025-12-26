@@ -1,6 +1,9 @@
 package org.skypro.skyshop.basket;
 
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.DiscountedProduct;
+
 
 public class ProductBasket {
     private Product[] products;
@@ -43,12 +46,25 @@ public class ProductBasket {
             System.out.println("корзина пустая");
             return;
         }
-        for (int i = 0; i < count; i++) {
-            System.out.println(products[i].getName() + " цена = " + products[i].getPrice());
 
+        int specialProductsCount = 0;
+
+        // Выводим все товары и считаем специальные
+        for (int i = 0; i < count; i++) {
+            Product product = products[i];
+            System.out.println(product.getDisplayString());
+
+            // Используем метод isSpecial() вместо instanceof
+            if (product.isSpecial()) {
+                specialProductsCount++;
+            }
         }
-        System.out.println("итоговая цена = " + getTotalPrice());
+
+        // Выводим итоговую информацию
+        System.out.println("Итого: " + getTotalPrice());
+        System.out.println("Специальных товаров: " + specialProductsCount);
     }
+
     //метод проверки наличия товара в корзине
     public boolean containProduct(String productName) {
         for (int i = 0; i < count; i++) {
